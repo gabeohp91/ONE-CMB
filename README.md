@@ -2,17 +2,35 @@
 
 ## Tổng quan dự án
 
-Dự án này triển khai một ứng dụng web sử dụng Next.js, TypeScript và Tailwind CSS. Hiện tại, dự án đang trong quá trình chuyển đổi kiến trúc từ cấu trúc truyền thống sang kiến trúc dựa trên tính năng (feature-based architecture) kết hợp với thiết kế component nguyên tử (atomic component design).
+ONE CMB là một ứng dụng web quản lý dành cho công ty xây dựng và thiết kế, được phát triển bằng Next.js, TypeScript và Tailwind CSS. Nền tảng này cung cấp các công cụ quản lý công việc, dự án, nhân sự và tài nguyên với giao diện thân thiện và trải nghiệm người dùng tối ưu.
 
-Mục tiêu của việc tái cấu trúc này:
+Dự án đang trong quá trình chuyển đổi kiến trúc từ cấu trúc truyền thống sang kiến trúc dựa trên tính năng kết hợp với thiết kế component nguyên tử, nhằm đạt được các mục tiêu:
 - Cải thiện tính module hóa và khả năng tái sử dụng mã
-- Tăng khả năng bảo trì và mở rộng
-- Cải thiện hiệu suất và trải nghiệm người dùng
-- Áp dụng nguyên tắc thiết kế phù hợp và nhất quán
+- Tăng cường khả năng bảo trì và mở rộng
+- Nâng cao hiệu suất và trải nghiệm người dùng
+- Áp dụng nhất quán các nguyên tắc thiết kế hiện đại
 
-## Cấu trúc dự án
+## Các tính năng chính
 
-Dự án đã được tổ chức lại theo cấu trúc hướng tính năng, tổ chức mã theo tính năng nghiệp vụ thay vì lớp kỹ thuật:
+ONE CMB là một hệ thống toàn diện với các chức năng:
+
+1. **Bảng điều khiển (Dashboard)** - Hiển thị tổng quan các chỉ số và thông tin quan trọng
+2. **Quản lý công việc (Tasks)** - Theo dõi tiến độ, phân công và quản lý công việc
+3. **Quản lý tài nguyên (Resources)** - Quản lý thiết bị, phần mềm và tài liệu
+4. **Quản lý hoạt động (Activities)** - Theo dõi lịch họp, đào tạo và thông báo
+5. **Trợ lý AI tích hợp** - Hỗ trợ người dùng với giao diện chat thông minh
+
+Giao diện được thiết kế với khả năng:
+- Hiển thị thông tin cá nhân của nhân viên
+- Theo dõi và cập nhật công việc
+- Quản lý tài nguyên và tài liệu
+- Xem lịch biểu và hoạt động sắp tới
+
+## Kiến trúc dự án
+
+### Cấu trúc thư mục
+
+Dự án được tổ chức theo kiến trúc dựa trên tính năng, giúp code được phân nhóm theo chức năng thay vì theo lớp kỹ thuật:
 
 ```
 src/
@@ -47,25 +65,25 @@ features/feature-name/
 └── index.ts            # API công khai của tính năng
 ```
 
-## Kiến trúc Component Nguyên Tử (Atomic Design)
+## Thiết kế Component Nguyên Tử (Atomic Design)
 
-Dự án này đang áp dụng phương pháp thiết kế nguyên tử trong kiến trúc dựa trên tính năng. Phương pháp này tổ chức các component UI theo thứ bậc dựa trên mức độ phức tạp và đảm bảo sự phân tách rõ ràng về mối quan tâm.
+ONE CMB áp dụng phương pháp thiết kế nguyên tử, sắp xếp các component UI theo thứ bậc phức tạp tăng dần:
 
 ### 1. Nguyên tử (Atoms)
 
-Nguyên tử là các building block cơ bản nhất của UI, không thể chia nhỏ hơn nữa.
+Các thành phần UI cơ bản nhất, không thể chia nhỏ hơn.
 
 Ví dụ:
+- `Button`
 - `StatusBadge`
 - `PriorityBadge`
 - `ProgressBar`
-- `Button`
 
 Vị trí: `/src/shared/components/atoms/`
 
 ### 2. Phân tử (Molecules)
 
-Phân tử là các nhóm nguyên tử kết hợp với nhau, tương đối đơn giản và hoạt động như một đơn vị.
+Sự kết hợp của nhiều nguyên tử để tạo thành các đơn vị chức năng đơn giản.
 
 Ví dụ:
 - `TaskStatusDisplay` (kết hợp StatusBadge, PriorityBadge và ProgressBar)
@@ -74,88 +92,57 @@ Vị trí: `/src/shared/components/molecules/`
 
 ### 3. Sinh vật (Organisms)
 
-Sinh vật là các component UI phức tạp gồm nhiều phân tử và/hoặc nguyên tử. Các component này tạo thành các phần riêng biệt của giao diện.
+Các component phức tạp được tạo từ nhiều phân tử và/hoặc nguyên tử.
 
 Ví dụ:
 - `TaskCard`
 - `TaskList`
-- `TaskForm`
-- `TaskStats`
+- `ResourceItem`
+- `AIAssistant`
 
-Vị trí: `/src/features/tasks/components/`
+Vị trí: `/src/features/*/components/`
 
 ### 4. Template
 
-Template chủ yếu bao gồm các nhóm sinh vật kết hợp với nhau để tạo thành các trang. Chúng tập trung vào cấu trúc trang hơn là nội dung.
+Kết hợp nhiều sinh vật để tạo thành cấu trúc trang, tập trung vào bố cục.
 
 Ví dụ:
-- `TaskDemo` - Một template thể hiện cách kết hợp các component của nhiệm vụ
+- `EmployeeDashboard`
 
 ### 5. Trang (Pages)
 
-Trang là các trường hợp cụ thể của template hiển thị giao diện với nội dung thực tế.
+Các trường hợp cụ thể của template với dữ liệu thực tế.
 
 Ví dụ:
-- `/src/app/tasks-example.tsx`
+- `/src/app/page.tsx`
 
-## Ranh giới Component
+## Quản lý dữ liệu và State
 
-Dự án thiết lập ranh giới component rõ ràng:
+ONE CMB đang áp dụng chiến lược quản lý dữ liệu hiện đại với sự kết hợp của:
 
-### 1. Component trình bày (Presentational)
+### Các công nghệ chính
 
-Tập trung vào việc render UI, nhận dữ liệu qua props và không kết nối trực tiếp với nguồn dữ liệu.
+1. **React Query** - Dùng cho quản lý state phía server:
+   - Lấy dữ liệu
+   - Caching thông minh
+   - Lấy lại dữ liệu tự động
+   - Quản lý mutations
 
-Ví dụ:
-- `StatusBadge`
-- `PriorityBadge`
-- `ProgressBar`
-- `TaskCard`
-- `TaskStats`
+2. **Zustand** - Dùng cho state phía client:
+   - State UI toàn cục
+   - Quản lý xác thực
+   - Lưu trữ state giữa các phiên
 
-### 2. Component container
+3. **API Client** - Sử dụng Axios với các tính năng:
+   - Xử lý lỗi nhất quán
+   - Xác thực request tự động
+   - Bộ chặn request/response
 
-Kết nối với nguồn dữ liệu và truyền dữ liệu tới các component trình bày.
+4. **TypeScript** - Đảm bảo an toàn kiểu dữ liệu:
+   - Model dữ liệu định nghĩa rõ ràng
+   - Kiểu dữ liệu mạnh mẽ trong toàn bộ ứng dụng
 
-Ví dụ:
-- `TaskList` (kết nối với hook useTaskData)
-- `TaskDemo` (điều phối các component của nhiệm vụ)
-
-### 3. Hook
-
-Tách biệt việc lấy dữ liệu và logic nghiệp vụ khỏi các component UI.
-
-Ví dụ:
-- `useTaskData`: Lấy và quản lý dữ liệu nhiệm vụ
-- `useTaskActions`: Chứa các hành động đặc thù cho nhiệm vụ
-- `useTaskFilters`: Quản lý logic lọc nhiệm vụ
-
-## Quản lý dữ liệu
-
-Dự án đang trong quá trình chuyển đổi chiến lược quản lý dữ liệu, tập trung vào tính nhất quán, hiệu suất và trải nghiệm phát triển.
-
-### Trạng thái hiện tại của việc triển khai
-
-Đã hoàn thành:
-1. **Hợp nhất định nghĩa kiểu**:
-   - Đã hợp nhất các model nhiệm vụ trong `/shared/types/models/task.ts`
-   - Đã thêm tiện ích chuẩn hóa cho dữ liệu nhiệm vụ cũ
-   - Đã hợp nhất model user/employee trong `/shared/types/models/user.ts`
-   - Đã thêm khả năng tương thích ngược cho các giá trị trạng thái khác nhau
-
-2. **Chuẩn hóa API Client**:
-   - Nâng cấp `/shared/services/apiClient.ts` làm triển khai tiêu chuẩn
-   - Thêm phương thức có kiểu dữ liệu với xử lý lỗi thích hợp
-   - Cập nhật service nhiệm vụ để sử dụng API client hợp nhất
-
-3. **Hook lấy dữ liệu**:
-   - Tạo hook chuyển tiếp `useDataFetch` trong `/shared/hooks/use-data-fetch.ts`
-   - Cập nhật hook dữ liệu nhiệm vụ để sử dụng kiểu hợp nhất
-   - Thêm triển khai React Query cho việc di chuyển trong tương lai
-
-### Kiến trúc quản lý dữ liệu
-
-Kiến trúc quản lý dữ liệu bao gồm nhiều lớp:
+### Kiến trúc dữ liệu
 
 ```
 ┌─────────────────────────────────────────────┐
@@ -175,423 +162,234 @@ Kiến trúc quản lý dữ liệu bao gồm nhiều lớp:
 └───────────────────────────────┴─────────────┘
 ```
 
-### Các thành phần chính
-
-1. **Model dữ liệu thống nhất**
-   - Tất cả model dữ liệu được định nghĩa trong `src/shared/types/models`
-   
-2. **Zustand Stores**
-   - Zustand được sử dụng để quản lý state toàn cục, đặc biệt là:
-     - State UI ứng dụng
-     - Xác thực người dùng
-     - State phía client cần lưu giữ
-
-3. **React Query**
-   - React Query được sử dụng để quản lý state phía server, xử lý:
-     - Lấy dữ liệu
-     - Caching
-     - Lấy lại dữ liệu
-     - Mutations
-     - Loại bỏ yêu cầu trùng lặp
-
-4. **Dịch vụ API**
-   - Dịch vụ API trừu tượng hóa chi tiết giao tiếp với backend
-
-5. **API Client**
-   - Client tập trung dựa trên axios cho tất cả yêu cầu API xử lý:
-     - Xác thực
-     - Xử lý lỗi
-     - Bộ chặn yêu cầu/phản hồi
-     - Cấu hình URL cơ sở
-
-### Các nguyên tắc cốt lõi
-
-1. **Tách biệt mối quan tâm** - Phân biệt rõ ràng giữa state phía server, state phía client và state UI
-2. **Nguồn sự thật duy nhất** - Model dữ liệu tập trung và quản lý state
-3. **An toàn kiểu** - Kiểu TypeScript toàn diện để xử lý dữ liệu nhất quán
-4. **Hiệu suất** - Chiến lược lấy dữ liệu và caching hiệu quả
-5. **Trải nghiệm phát triển** - API và hook trực quan để truy cập dữ liệu
-
-### Thực hành tốt nhất
-
-1. **Sử dụng React Query cho hầu hết việc lấy dữ liệu**
-   - Ưu tiên React Query cho dữ liệu server thay đổi thường xuyên
-   - Xử lý hiệu quả trạng thái loading, lỗi, caching và dữ liệu cũ
-
-2. **Sử dụng Zustand cho state phía client**
-   - Sử dụng Zustand cho state UI, xác thực và dữ liệu chỉ dành cho client
-   - Lưu giữ state giữa các phiên với middleware `persist`
-
-3. **Kết hợp cách tiếp cận khi cần thiết**
-   - Một số tính năng có thể yêu cầu cả hai cách tiếp cận
-   - Ví dụ: Lọc nhiệm vụ với state bộ lọc trong Zustand, nhưng dữ liệu được lọc đến từ React Query
-
-4. **Chiến lược khóa truy vấn nhất quán**
-   - Sử dụng đối tượng `queryKeys` để quản lý cache nhất quán
-   - Khóa nên bao gồm tham số bộ lọc liên quan
-
-5. **Kiểu dữ liệu mọi thứ**
-   - Tất cả model dữ liệu, phản hồi API và state nên được gán kiểu
-   - Sử dụng giao diện và kiểu TypeScript nhất quán
-
-## Kỹ thuật tối ưu hóa hiệu suất
-
-Tài liệu này mô tả các kỹ thuật tối ưu hóa hiệu suất được triển khai trong dự án để cải thiện tốc độ tải, hiệu suất render và trải nghiệm người dùng.
-
-### Kết quả đánh giá hiệu suất gần đây
-
-Dựa trên đánh giá và phân tích mã gần đây, chúng tôi đã xác định một số vấn đề liên quan đến hiệu suất và cơ hội tối ưu hóa:
-
-#### Vấn đề hiện tại
-
-1. **Triển khai component dư thừa**:
-   - Nhiều phiên bản của các component (AIAssistant, TaskCard, v.v.) làm tăng kích thước bundle
-   - Tối ưu hóa không nhất quán trong các triển khai trùng lặp
-
-2. **Quản lý dữ liệu không hiệu quả**:
-   - Nhiều triển khai API client dẫn đến caching không nhất quán
-   - Cả Context API và Zustand stores được sử dụng, gây trùng lặp state
-
-3. **Thiếu ảo hóa**:
-   - Nhiều component danh sách render tất cả các mục cùng một lúc mà không ảo hóa
-   - Bảng dữ liệu lớn không triển khai phân trang hoặc ảo hóa
-
-### Các kỹ thuật tối ưu hóa
-
-#### 1. Phân chia mã (Code Splitting)
-
-Phân chia mã cho phép chia các gói JavaScript thành các phần nhỏ hơn có thể được tải theo yêu cầu, giảm thời gian tải ban đầu của ứng dụng.
-
-**Triển khai:**
+### Ví dụ sử dụng React Query
 
 ```typescript
-import dynamic from 'next/dynamic';
+// Trong features/tasks/hooks/useTasks.ts
+export function useTasks(filters?: Record<string, any>) {
+  return useQuery(
+    [queryKeys.tasks, filters],
+    () => taskService.getTasks(filters),
+    {
+      keepPreviousData: true,
+      staleTime: 5 * 60 * 1000, // 5 phút
+    }
+  );
+}
+```
 
+### Ví dụ Zustand Store
+
+```typescript
+// Trong shared/stores/uiStore.ts
+export const useUIStore = create<UIState>()(
+  persist(
+    (set) => ({
+      sidebarOpen: true,
+      setSidebarOpen: (open) => set({ sidebarOpen: open }),
+      toggleSidebar: () => set(state => ({ sidebarOpen: !state.sidebarOpen })),
+      // ... các state và action khác
+    }),
+    {
+      name: 'ui-storage',
+      partialize: (state) => ({
+        theme: state.theme,
+        preferences: state.preferences,
+      }),
+    }
+  )
+);
+```
+
+## Tối ưu hóa hiệu suất
+
+ONE CMB được tối ưu hiệu suất thông qua nhiều kỹ thuật:
+
+### 1. Code Splitting
+
+Sử dụng Next.js dynamic imports để chia nhỏ ứng dụng:
+
+```typescript
 const AIAssistant = dynamic(() => import('./components/AIAssistant'), {
   loading: () => <div className="p-4">Đang tải trợ lý AI...</div>,
-  ssr: false, // Tắt render phía server nếu cần
+  ssr: false,
 });
-
-export default AIAssistant;
 ```
 
-**Lợi ích:**
-- **Giảm kích thước bundle ban đầu**: Chỉ mã cần thiết được tải ban đầu
-- **Khởi động nhanh hơn**: Ứng dụng trở nên tương tác nhanh hơn
-- **Cải thiện hiệu suất**: Tài nguyên chỉ được tải khi cần thiết
-- **Trải nghiệm di động tốt hơn**: Giảm sử dụng dữ liệu và tải nhanh hơn trên thiết bị di động
+### 2. Ảo hóa danh sách (Virtualization)
 
-**Khi nào sử dụng:**
-- Cho các component lớn không cần thiết ngay lập tức
-- Cho các tính năng chỉ được sử dụng bởi một số người dùng
-- Cho chức năng nâng cao được truy cập thông qua tương tác người dùng
-- Cho các phần khác nhau của ứng dụng (như bảng điều khiển, trang cài đặt)
-
-#### 2. Tối ưu hóa Render React
-
-Tối ưu hóa render React ngăn chặn re-render không cần thiết, cải thiện hiệu suất của các component, đặc biệt là trong các ứng dụng có nhiều dữ liệu.
-
-**Triển khai:**
-
-Chúng tôi sử dụng một số hook và kỹ thuật React để tối ưu hóa render:
-
-**React.memo**:
-```typescript
-const TaskList = ({ tasks, filter }) => {
-  // Triển khai component
-};
-
-// Ngăn re-render nếu props không thay đổi
-export default React.memo(TaskList);
-```
-
-**useMemo**:
-```typescript
-const filteredTasks = useMemo(() => {
-  return tasks.filter(task => {
-    if (filter.status && task.status !== filter.status) return false;
-    if (filter.priority && task.priority !== filter.priority) return false;
-    return true;
-  });
-}, [tasks, filter]);
-```
-
-**useCallback**:
-```typescript
-const handleSelectTask = useCallback((task) => {
-  if (onSelectTask) {
-    onSelectTask(task);
-  }
-}, [onSelectTask]);
-```
-
-**Lợi ích:**
-- **Giảm chu kỳ render**: Component chỉ re-render khi cần thiết
-- **Cải thiện hiệu suất**: Ngăn chặn tính toán tốn kém trên mỗi lần render
-- **Phản hồi tốt hơn**: UI vẫn mượt mà ngay cả với các cập nhật thường xuyên
-- **Tham chiếu hàm nhất quán**: Ngăn chặn re-render không cần thiết của component con
-
-**Khi nào sử dụng:**
-- **React.memo**: Cho các component hàm thuần túy thường xuyên render nhưng với cùng props
-- **useMemo**: Cho các tính toán tốn kém phụ thuộc vào props/state cụ thể
-- **useCallback**: Cho các trình xử lý sự kiện được truyền cho các component con đã tối ưu hóa
-
-#### 3. Ảo hóa cho danh sách dài
-
-Ảo hóa chỉ render các mục hiện đang hiển thị trong viewport, cải thiện đáng kể hiệu suất cho danh sách dài.
-
-**Triển khai:**
-
-Chúng tôi sử dụng `react-window` để ảo hóa danh sách dài:
+Sử dụng react-window để chỉ render các phần tử trong viewport:
 
 ```typescript
 import { FixedSizeList } from 'react-window';
 
-const ResourceList = ({ resources }) => {
-  const Row = ({ index, style }) => (
-    <div style={style}>
-      <ResourceItem resource={resources[index]} />
-    </div>
-  );
-
-  return (
-    <FixedSizeList
-      height={500}
-      width="100%"
-      itemCount={resources.length}
-      itemSize={80}
-    >
-      {Row}
-    </FixedSizeList>
-  );
-};
+const ResourceList = ({ resources }) => (
+  <FixedSizeList
+    height={500}
+    width="100%"
+    itemCount={resources.length}
+    itemSize={80}
+  >
+    {({ index, style }) => (
+      <div style={style}>
+        <ResourceItem resource={resources[index]} />
+      </div>
+    )}
+  </FixedSizeList>
+);
 ```
 
-**Lợi ích:**
-- **Sử dụng bộ nhớ không đổi**: Chỉ các mục hiển thị được giữ trong DOM
-- **Cuộn mượt mà**: Ngay cả với hàng nghìn mục
-- **Cải thiện thời gian tải ban đầu**: Ít node DOM cần tạo khi tải
-- **Giảm căng thẳng cho trình duyệt**: Ngăn chặn trình duyệt bị trễ với tập dữ liệu lớn
+### 3. Tối ưu hóa Render
 
-**Khi nào sử dụng:**
-- Danh sách có hơn 50-100 mục
-- Khi render các mục phức tạp hoặc phân cấp component
-- Trong giao diện quản trị có nhiều dữ liệu
-- Khi người dùng cần cuộn qua tập dữ liệu lớn
-
-#### 4. Lazy Loading cho hình ảnh
-
-Lazy loading trì hoãn việc tải hình ảnh cho đến khi chúng sắp đi vào viewport, cải thiện thời gian tải trang và giảm sử dụng dữ liệu không cần thiết.
-
-**Triển khai:**
-
-Chúng tôi đã tạo component LazyImage tùy chỉnh sử dụng Next.js Image với trạng thái loading:
+Áp dụng React.memo, useMemo và useCallback để tránh re-render không cần thiết:
 
 ```typescript
-const LazyImage = ({ src, alt, ...props }) => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  
-  return (
-    <div className="relative">
-      {!isLoaded && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
-          {/* Placeholder loading */}
-        </div>
-      )}
-      <NextImage
-        src={src}
-        alt={alt}
-        onLoadingComplete={() => setIsLoaded(true)}
-        {...props}
-      />
-    </div>
-  );
-};
+// Sử dụng React.memo để ghi nhớ component
+export default React.memo(TaskList);
+
+// Sử dụng useMemo cho tính toán phức tạp
+const filteredTasks = useMemo(() => {
+  return tasks.filter(/* logic lọc */);
+}, [tasks, filter]);
+
+// Sử dụng useCallback cho hàm xử lý sự kiện
+const handleSelectTask = useCallback((task) => {
+  onSelectTask(task);
+}, [onSelectTask]);
 ```
 
-**Lợi ích:**
-- **Tải trang ban đầu nhanh hơn**: Chỉ những hình ảnh hiển thị được tải ngay lập tức
-- **Giảm sử dụng dữ liệu**: Hình ảnh chỉ được tải khi cần thiết
-- **Trải nghiệm người dùng tốt hơn**: Tải tiến bộ với placeholder
-- **Cải thiện Core Web Vitals**: Giúp với chỉ số Largest Contentful Paint (LCP)
+### 4. Lazy Loading hình ảnh
 
-**Khi nào sử dụng:**
-- Cho các trang có nhiều hình ảnh hoặc gallery
-- Cho các trang dài có nhiều hình ảnh dưới fold
-- Cho danh sách sản phẩm hoặc lưới hình ảnh
-- Bất cứ nơi nào hình ảnh không hiển thị ngay lập tức
+Sử dụng LazyImage component để chỉ tải hình ảnh khi cần thiết:
 
-#### 5. Tối ưu hóa bổ sung
-
-##### Tối ưu hóa quản lý state
-- **Cập nhật store có chọn lọc**: Chỉ cập nhật những gì thay đổi, không phải toàn bộ state
-- **Cấu trúc store chuẩn hóa**: Tránh các đối tượng state lồng nhau sâu
-- **Middleware cho side effect**: Giữ các component sạch bằng cách xử lý side effect trong middleware của store
-
-##### Tối ưu hóa mạng
-- **Gộp nhóm yêu cầu**: Kết hợp nhiều yêu cầu API thành một khi có thể
-- **Chiến lược caching**: Cache các phản hồi với TTL (Time To Live) thích hợp
-- **Loại bỏ trùng lặp yêu cầu**: Ngăn chặn các cuộc gọi API trùng lặp cho cùng một dữ liệu
-
-##### Tối ưu hóa build
-- **Tree Shaking**: Loại bỏ mã không sử dụng thông qua export/import thích hợp
-- **Phân tích bundle**: Kiểm tra kích thước bundle thường xuyên với công cụ như `@next/bundle-analyzer`
-- **Cấu hình phân chia mã**: Cấu hình các điểm chia qua module federation của Next.js
-
-## Kế hoạch làm sạch toàn diện
-
-Dự án hiện đang trong quá trình làm sạch mã và cải thiện cấu trúc. Dưới đây là các giai đoạn triển khai:
-
-### Giai đoạn 1: Làm sạch an toàn
-
-Các file có thể xóa an toàn mà không ảnh hưởng đến chức năng:
-
-```
-# Component AI Tool không sử dụng
-/src/modules/ai-tools/ContentWriter.tsx
-/src/modules/ai-tools/Translator.tsx
-/src/modules/ai-tools/index.ts
-
-# File Context không sử dụng
-/src/contexts/ActivityContext.tsx
-/src/contexts/TaskContext.tsx
-/src/contexts/UIContext.tsx
-
-# File ví dụ (hoặc chuyển đến thư mục /docs)
-/src/app/data-management-example.tsx
-/src/app/page.example.tsx
-/src/app/performance-example.tsx
-/src/app/tasks-example.tsx
+```typescript
+<LazyImage
+  src="/path/to/image.jpg"
+  alt="Mô tả hình ảnh"
+  width={300}
+  height={200}
+/>
 ```
 
-### Giai đoạn 2: Hợp nhất định nghĩa kiểu
+## Kế hoạch phát triển
 
-1. **Hợp nhất kiểu Task**
-   - Giữ `/src/shared/types/models/task.ts` là định nghĩa chính thống
-   - Xóa các định nghĩa trùng lặp
+Dự án đang tiến hành theo 5 giai đoạn:
 
-2. **Chuẩn hóa kiểu Employee/User**
-   - Hợp nhất `/src/data/employees/types.ts` và `/src/shared/types/models/user.ts`
-   - Chuẩn hóa đặt tên `User` trong toàn bộ mã
+### 1. Làm sạch mã dư thừa
 
-### Giai đoạn 3: Hợp nhất dữ liệu mô phỏng
+Loại bỏ các component và file không sử dụng. Ví dụ:
+- Các component AI Tool dư thừa
+- Context không còn sử dụng
+- File ví dụ và prototype
 
-1. **Hợp nhất dữ liệu mô phỏng**
-   - Di chuyển dữ liệu mô phỏng cần thiết đến thư mục service
-   - Xóa các file dữ liệu dư thừa
+### 2. Hợp nhất và chuẩn hóa kiểu dữ liệu
 
-### Giai đoạn 4: Di chuyển quản lý state
+- Tạo định nghĩa kiểu dữ liệu duy nhất cho Task, User, Resource
+- Chuẩn hóa các enum và interface
+- Thêm các utility cho tương thích ngược
 
-1. **Tạo Zustand Stores**
-   - Triển khai store cho mỗi thực thể dữ liệu chính
-   - Thêm hook React Query cho giao tiếp API
+### 3. Chuyển đổi quản lý state
 
-2. **Cập nhật Component**
-   - Cập nhật các component để sử dụng quản lý state mới
-   - Loại bỏ phụ thuộc vào context
+- Chuyển dần từ Context API sang Zustand + React Query
+- Triển khai store cho mỗi tính năng chính
+- Cập nhật component để sử dụng hooks mới
 
-### Giai đoạn 5: Quá trình xác minh
+### 4. Nâng cao hiệu suất
 
-Sau mỗi giai đoạn:
+- Tối ưu kích thước bundle
+- Thêm ảo hóa cho danh sách dài
+- Cải thiện lazy loading và code splitting
 
-1. **Chạy test**
-   - Đảm bảo tất cả các test đang chạy tiếp tục chạy
-   - Thêm test cho chức năng mới
+### 5. Mở rộng tính năng
 
-2. **Xác minh trực quan**
-   - Chạy ứng dụng và xác minh tất cả các tính năng UI
-   - Kiểm tra từng tab và tương tác
-
-3. **Kiểm tra hiệu suất**
-   - Xác minh kích thước bundle không tăng
-   - Kiểm tra vấn đề hiệu suất render
+- Cải thiện trợ lý AI
+- Tích hợp sâu hơn với hệ thống backend
+- Thêm biểu đồ và báo cáo trực quan
 
 ## Hướng dẫn phát triển
 
 ### Quy ước import
 
 ```typescript
-// Tốt
+// Tốt - sử dụng exports từ index.ts
 import { TaskList, useTaskData } from '@/features/tasks';
-import { Button } from '@/shared/components/ui/button';
+import { Button } from '@/shared/components/atoms';
 
-// Tránh
+// Tránh - import trực tiếp từ file
 import TaskList from '@/features/tasks/components/TaskList';
-import useTaskData from '@/features/tasks/hooks/useTaskData';
-import Button from '@/shared/components/ui/button';
 ```
 
-### Đường dẫn alias
+### Quy ước đặt tên
 
-Đường dẫn alias mới đã được cấu hình trong `tsconfig.json`:
-
-```json
-{
-  "paths": {
-    "@/*": ["./src/*"],
-    "@/features/*": ["./src/features/*"],
-    "@/shared/*": ["./src/shared/*"],
-    "@/styles/*": ["./src/styles/*"],
-    "@/lib/*": ["./src/lib/*"],
-    "@/app/*": ["./src/app/*"]
-  }
-}
-```
+- **Component**: PascalCase (TaskList, StatusBadge)
+- **Hook**: camelCase bắt đầu bằng use (useTaskData)
+- **Util**: camelCase (formatDate, normalizeTask)
+- **Type**: PascalCase (Task, User, Resource)
+- **File**: kebab-case (task-list.tsx, use-data-fetch.ts)
 
 ### Cấu trúc Component
 
-- Nhóm file component và style của nó với nhau
-- Mỗi component nên có một trách nhiệm rõ ràng, duy nhất
-- Sử dụng export có tên để đảm bảo tính nhất quán
+- Mỗi component nên có một trách nhiệm duy nhất
+- Component nên được phân loại theo cấu trúc Atomic Design
+- Container và presentational components nên được tách biệt
 
-### Hook
+### Testing
 
-- Hook tùy chỉnh nên có tiền tố `use`
-- Đặt hook đặc thù cho tính năng trong thư mục `hooks` của tính năng đó
-- Đặt hook dùng chung trong `shared/hooks`
+- Mỗi component quan trọng cần có unit test
+- Các utility cần được test kỹ lưỡng
+- E2E test nên bao quát các luồng chính của người dùng
 
-### Kiểu dữ liệu
+## Công nghệ sử dụng
 
-- Định nghĩa giao diện và kiểu gần nơi chúng được sử dụng
-- Kiểu đặc thù cho tính năng nên ở trong thư mục `types` của tính năng đó
-- Kiểu dùng chung nên ở trong `shared/types`
+- **Framework**: Next.js 15.x
+- **Ngôn ngữ**: TypeScript
+- **Styling**: Tailwind CSS
+- **State Management**: Zustand, React Query
+- **UI Components**: Shadcn UI, Radix UI
+- **Biểu đồ**: Recharts
+- **Virtualization**: react-window
+- **API Client**: Axios
+- **Testing**: Jest, React Testing Library
 
-### Dịch vụ
+## Hướng dẫn cài đặt và chạy dự án
 
-- Tạo các lớp dịch vụ cho hoạt động API và dữ liệu
-- Dịch vụ đặc thù cho tính năng đặt trong thư mục `services` của tính năng đó
-- Dịch vụ dùng chung đặt trong `shared/services`
+### Yêu cầu hệ thống
+- Node.js 18.x trở lên
+- npm/yarn/pnpm
 
-## Các tính năng chính
+### Cài đặt
+```bash
+# Clone dự án
+git clone <repository-url>
 
-Ứng dụng chính được cấu trúc từ các thành phần sau:
+# Cài đặt dependencies
+npm install
 
-- **Cấu trúc gốc**: `RootLayout` > `AppProviders` > `EmployeeDashboard`
-- **Điều hướng**: `AppSidebar`, `Header`
-- **Nội dung chính**: Render có điều kiện dựa trên tab của bảng điều khiển, nhiệm vụ, tài nguyên, hoạt động
-- **Trợ lý AI**: Component `AIAssistant` với chức năng chat
+# Tạo các biến môi trường
+cp .env.example .env.local
+```
 
-## Lợi ích của cách tiếp cận này
+### Chạy môi trường phát triển
+```bash
+# Khởi động với webpack
+npm run dev
 
-1. **Tính module hóa**: Component có thể tái sử dụng và khép kín
-2. **Khả năng bảo trì**: Phân tách rõ ràng về mối quan tâm
-3. **Tính nhất quán**: Cấu trúc và mẫu chuẩn hóa
-4. **Khả năng mở rộng**: Dễ dàng thêm tính năng mới mà không ảnh hưởng đến các tính năng khác
-5. **Khả năng kiểm thử**: Component có ranh giới rõ ràng dễ kiểm thử hơn
-6. **Trải nghiệm phát triển**: Dễ dàng hiểu và điều hướng codebase
+# Khởi động với turbopack (nhanh hơn)
+npm run dev:turbo
 
-## Hướng dẫn dài hạn
+# Chạy test
+npm run test
+```
 
-1. **Tổ chức Component**
-   - Tuân theo tổ chức dựa trên tính năng
-   - Giữ nguyên tắc thiết kế nguyên tử cho component UI
+### Build và triển khai
+```bash
+# Build cho production
+npm run build
 
-2. **Quản lý dữ liệu**
-   - Sử dụng React Query cho state phía server
-   - Sử dụng Zustand cho state phía client
-   - Giữ các kiểu trong `/shared/types/models/`
+# Chạy ứng dụng đã build
+npm run start
+```
 
-3. **Chất lượng mã**
-   - Thực thi đặt tên nhất quán (camelCase cho hàm, PascalCase cho component)
-   - Thêm tài liệu component
-   - Duy trì bảo phủ test
+## Kết luận
+
+ONE CMB là một dự án hiện đại áp dụng các thực hành tốt nhất trong phát triển frontend. Với kiến trúc dựa trên tính năng, thiết kế component nguyên tử và chiến lược quản lý state hiệu quả, dự án hướng đến việc tạo ra một ứng dụng dễ bảo trì, dễ mở rộng và hiệu suất cao cho quản lý doanh nghiệp.
