@@ -1,395 +1,245 @@
-# Tài liệu dự án ONE CMB
+# ONE CMB - Hệ thống Quản lý Nhân viên và Công việc
 
-## Tổng quan dự án
+<div align="center">
+  <img src="path/to/logo.png" alt="ONE CMB Logo" width="200" height="auto">
+  <h3>Nền tảng quản lý nhân sự và công việc dành cho doanh nghiệp hiện đại</h3>
+</div>
 
-ONE CMB là một ứng dụng web quản lý dành cho công ty xây dựng và thiết kế, được phát triển bằng Next.js, TypeScript và Tailwind CSS. Nền tảng này cung cấp các công cụ quản lý công việc, dự án, nhân sự và tài nguyên với giao diện thân thiện và trải nghiệm người dùng tối ưu.
+## 📖 Tổng quan
 
-Dự án đang trong quá trình chuyển đổi kiến trúc từ cấu trúc truyền thống sang kiến trúc dựa trên tính năng kết hợp với thiết kế component nguyên tử, nhằm đạt được các mục tiêu:
-- Cải thiện tính module hóa và khả năng tái sử dụng mã
-- Tăng cường khả năng bảo trì và mở rộng
-- Nâng cao hiệu suất và trải nghiệm người dùng
-- Áp dụng nhất quán các nguyên tắc thiết kế hiện đại
+ONE CMB là hệ thống quản lý nhân viên và công việc toàn diện được phát triển trên nền tảng Next.js và React. Hệ thống cung cấp giao diện trực quan để theo dõi và quản lý thông tin nhân viên, danh sách công việc, tài nguyên, và các hoạt động trong doanh nghiệp. Được tích hợp trợ lý AI thông minh giúp nâng cao hiệu quả làm việc.
 
-## Các tính năng chính
+## ✨ Tính năng chính
 
-ONE CMB là một hệ thống toàn diện với các chức năng:
+- **Bảng điều khiển tổng quan**: Hiển thị thông tin nhân viên và các công việc quan trọng
+- **Quản lý công việc**: Theo dõi, phân công và cập nhật tiến độ công việc
+- **Quản lý tài nguyên**: Quản lý thiết bị, phần mềm và dữ liệu
+- **Theo dõi hoạt động**: Quản lý các hoạt động đến và đi trong hệ thống
+- **Trợ lý AI tích hợp**: Hỗ trợ trả lời câu hỏi và đề xuất hành động
+- **Giao diện đáp ứng**: Tương thích với nhiều kích thước màn hình
 
-1. **Bảng điều khiển (Dashboard)** - Hiển thị tổng quan các chỉ số và thông tin quan trọng
-2. **Quản lý công việc (Tasks)** - Theo dõi tiến độ, phân công và quản lý công việc
-3. **Quản lý tài nguyên (Resources)** - Quản lý thiết bị, phần mềm và tài liệu
-4. **Quản lý hoạt động (Activities)** - Theo dõi lịch họp, đào tạo và thông báo
-5. **Trợ lý AI tích hợp** - Hỗ trợ người dùng với giao diện chat thông minh
+## 🚀 Công nghệ sử dụng
 
-Giao diện được thiết kế với khả năng:
-- Hiển thị thông tin cá nhân của nhân viên
-- Theo dõi và cập nhật công việc
-- Quản lý tài nguyên và tài liệu
-- Xem lịch biểu và hoạt động sắp tới
+- **Frontend Framework**: Next.js 15.2.3
+- **UI Library**: React 18.3.1
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **State Management**: Zustand, React Query
+- **Authentication**: Firebase
+- **UI Components**: Radix UI, Shadcn UI
+- **Charting**: Recharts
+- **Testing**: Jest
+- **Linting**: ESLint
+- **APIs**: REST API
 
-## Kiến trúc dự án
-
-### Cấu trúc thư mục
-
-Dự án được tổ chức theo kiến trúc dựa trên tính năng, giúp code được phân nhóm theo chức năng thay vì theo lớp kỹ thuật:
+## 🏗 Cấu trúc dự án
 
 ```
 src/
-├── features/           # Module dựa trên tính năng
-│   ├── auth/           # Xác thực người dùng
-│   ├── dashboard/      # Tổng quan bảng điều khiển
-│   ├── tasks/          # Quản lý nhiệm vụ
-│   ├── resources/      # Quản lý tài nguyên
-│   ├── activities/     # Quản lý hoạt động
-│   └── ai-assistant/   # Trợ lý AI chat
-├── shared/             # Tài nguyên dùng chung
-│   ├── components/     # Component UI có thể tái sử dụng
-│   ├── hooks/          # React hooks tùy chỉnh
-│   ├── utils/          # Các hàm tiện ích
-│   ├── services/       # Dịch vụ API
-│   └── types/          # Các định nghĩa kiểu TypeScript
-├── styles/             # Style toàn cục
-├── lib/                # Cấu hình thư viện bên thứ ba
-└── app/                # Cấu trúc router của Next.js
+├── app/               # Các thành phần chính của Next.js
+│   ├── api/           # API routes
+│   ├── globals.css    # Styles toàn cục
+│   ├── layout.tsx     # Layout chính
+│   └── page.tsx       # Trang chính
+│
+├── components/        # UI Components
+│   ├── AIAssistant/   # Trợ lý AI
+│   ├── AppSidebar/    # Sidebar
+│   ├── Header/        # Header
+│   └── ui/            # UI components
+│
+├── data/              # Mock data
+│
+├── features/          # Các tính năng của ứng dụng
+│   ├── resources/     # Quản lý tài nguyên
+│   └── tasks/         # Quản lý công việc
+│
+├── hooks/             # Custom React hooks
+│
+├── lib/               # Thư viện và tiện ích
+│   ├── providers.tsx  # Context Providers
+│   ├── react-query.ts # Cấu hình React Query
+│   └── utils.ts       # Utility functions
+│
+├── modules/           # Các module chức năng
+│   ├── ai-assistant/  # Module trợ lý AI
+│   ├── activities/    # Module hoạt động
+│   ├── employees/     # Module nhân viên
+│   ├── shared/        # Shared modules
+│   └── tasks/         # Module công việc
+│
+├── services/          # API services
+│
+└── shared/            # Thành phần dùng chung
+    ├── components/    # Shared components
+    ├── hooks/         # Shared hooks
+    ├── services/      # Shared services
+    ├── stores/        # Zustand stores
+    ├── types/         # TypeScript types
+    └── utils/         # Utility functions
 ```
 
-### Cấu trúc module tính năng
+## 📋 Yêu cầu hệ thống
 
-Mỗi module tính năng tuân theo cấu trúc nội bộ nhất quán:
+- Node.js 18.x hoặc cao hơn
+- npm hoặc yarn
 
-```
-features/feature-name/
-├── components/         # Component đặc thù cho tính năng
-├── hooks/              # Hook tùy chỉnh cho tính năng
-├── services/           # Dịch vụ đặc thù cho tính năng
-├── types/              # Kiểu dữ liệu đặc thù cho tính năng
-└── index.ts            # API công khai của tính năng
-```
+## 🔧 Cài đặt và Cấu hình
 
-## Thiết kế Component Nguyên Tử (Atomic Design)
+1. **Clone dự án**
 
-ONE CMB áp dụng phương pháp thiết kế nguyên tử, sắp xếp các component UI theo thứ bậc phức tạp tăng dần:
-
-### 1. Nguyên tử (Atoms)
-
-Các thành phần UI cơ bản nhất, không thể chia nhỏ hơn.
-
-Ví dụ:
-- `Button`
-- `StatusBadge`
-- `PriorityBadge`
-- `ProgressBar`
-
-Vị trí: `/src/shared/components/atoms/`
-
-### 2. Phân tử (Molecules)
-
-Sự kết hợp của nhiều nguyên tử để tạo thành các đơn vị chức năng đơn giản.
-
-Ví dụ:
-- `TaskStatusDisplay` (kết hợp StatusBadge, PriorityBadge và ProgressBar)
-
-Vị trí: `/src/shared/components/molecules/`
-
-### 3. Sinh vật (Organisms)
-
-Các component phức tạp được tạo từ nhiều phân tử và/hoặc nguyên tử.
-
-Ví dụ:
-- `TaskCard`
-- `TaskList`
-- `ResourceItem`
-- `AIAssistant`
-
-Vị trí: `/src/features/*/components/`
-
-### 4. Template
-
-Kết hợp nhiều sinh vật để tạo thành cấu trúc trang, tập trung vào bố cục.
-
-Ví dụ:
-- `EmployeeDashboard`
-
-### 5. Trang (Pages)
-
-Các trường hợp cụ thể của template với dữ liệu thực tế.
-
-Ví dụ:
-- `/src/app/page.tsx`
-
-## Quản lý dữ liệu và State
-
-ONE CMB đang áp dụng chiến lược quản lý dữ liệu hiện đại với sự kết hợp của:
-
-### Các công nghệ chính
-
-1. **React Query** - Dùng cho quản lý state phía server:
-   - Lấy dữ liệu
-   - Caching thông minh
-   - Lấy lại dữ liệu tự động
-   - Quản lý mutations
-
-2. **Zustand** - Dùng cho state phía client:
-   - State UI toàn cục
-   - Quản lý xác thực
-   - Lưu trữ state giữa các phiên
-
-3. **API Client** - Sử dụng Axios với các tính năng:
-   - Xử lý lỗi nhất quán
-   - Xác thực request tự động
-   - Bộ chặn request/response
-
-4. **TypeScript** - Đảm bảo an toàn kiểu dữ liệu:
-   - Model dữ liệu định nghĩa rõ ràng
-   - Kiểu dữ liệu mạnh mẽ trong toàn bộ ứng dụng
-
-### Kiến trúc dữ liệu
-
-```
-┌─────────────────────────────────────────────┐
-│               Components                     │
-└───────────────────┬─────────────────────────┘
-                    │
-┌───────────────────▼─────────────────────────┐
-│               React Hooks                    │
-└───────────────────┬─────────────────────────┘
-                    │
-┌─────────┬─────────▼───────────┬─────────────┐
-│ Zustand │    React Query      │   Services   │
-└─────────┴─────────┬───────────┴───────┬─────┘
-                    │                   │
-┌───────────────────▼───────────┬───────▼─────┐
-│        Type Definitions       │    API Client│
-└───────────────────────────────┴─────────────┘
-```
-
-### Ví dụ sử dụng React Query
-
-```typescript
-// Trong features/tasks/hooks/useTasks.ts
-export function useTasks(filters?: Record<string, any>) {
-  return useQuery(
-    [queryKeys.tasks, filters],
-    () => taskService.getTasks(filters),
-    {
-      keepPreviousData: true,
-      staleTime: 5 * 60 * 1000, // 5 phút
-    }
-  );
-}
-```
-
-### Ví dụ Zustand Store
-
-```typescript
-// Trong shared/stores/uiStore.ts
-export const useUIStore = create<UIState>()(
-  persist(
-    (set) => ({
-      sidebarOpen: true,
-      setSidebarOpen: (open) => set({ sidebarOpen: open }),
-      toggleSidebar: () => set(state => ({ sidebarOpen: !state.sidebarOpen })),
-      // ... các state và action khác
-    }),
-    {
-      name: 'ui-storage',
-      partialize: (state) => ({
-        theme: state.theme,
-        preferences: state.preferences,
-      }),
-    }
-  )
-);
-```
-
-## Tối ưu hóa hiệu suất
-
-ONE CMB được tối ưu hiệu suất thông qua nhiều kỹ thuật:
-
-### 1. Code Splitting
-
-Sử dụng Next.js dynamic imports để chia nhỏ ứng dụng:
-
-```typescript
-const AIAssistant = dynamic(() => import('./components/AIAssistant'), {
-  loading: () => <div className="p-4">Đang tải trợ lý AI...</div>,
-  ssr: false,
-});
-```
-
-### 2. Ảo hóa danh sách (Virtualization)
-
-Sử dụng react-window để chỉ render các phần tử trong viewport:
-
-```typescript
-import { FixedSizeList } from 'react-window';
-
-const ResourceList = ({ resources }) => (
-  <FixedSizeList
-    height={500}
-    width="100%"
-    itemCount={resources.length}
-    itemSize={80}
-  >
-    {({ index, style }) => (
-      <div style={style}>
-        <ResourceItem resource={resources[index]} />
-      </div>
-    )}
-  </FixedSizeList>
-);
-```
-
-### 3. Tối ưu hóa Render
-
-Áp dụng React.memo, useMemo và useCallback để tránh re-render không cần thiết:
-
-```typescript
-// Sử dụng React.memo để ghi nhớ component
-export default React.memo(TaskList);
-
-// Sử dụng useMemo cho tính toán phức tạp
-const filteredTasks = useMemo(() => {
-  return tasks.filter(/* logic lọc */);
-}, [tasks, filter]);
-
-// Sử dụng useCallback cho hàm xử lý sự kiện
-const handleSelectTask = useCallback((task) => {
-  onSelectTask(task);
-}, [onSelectTask]);
-```
-
-### 4. Lazy Loading hình ảnh
-
-Sử dụng LazyImage component để chỉ tải hình ảnh khi cần thiết:
-
-```typescript
-<LazyImage
-  src="/path/to/image.jpg"
-  alt="Mô tả hình ảnh"
-  width={300}
-  height={200}
-/>
-```
-
-## Kế hoạch phát triển
-
-Dự án đang tiến hành theo 5 giai đoạn:
-
-### 1. Làm sạch mã dư thừa
-
-Loại bỏ các component và file không sử dụng. Ví dụ:
-- Các component AI Tool dư thừa
-- Context không còn sử dụng
-- File ví dụ và prototype
-
-### 2. Hợp nhất và chuẩn hóa kiểu dữ liệu
-
-- Tạo định nghĩa kiểu dữ liệu duy nhất cho Task, User, Resource
-- Chuẩn hóa các enum và interface
-- Thêm các utility cho tương thích ngược
-
-### 3. Chuyển đổi quản lý state
-
-- Chuyển dần từ Context API sang Zustand + React Query
-- Triển khai store cho mỗi tính năng chính
-- Cập nhật component để sử dụng hooks mới
-
-### 4. Nâng cao hiệu suất
-
-- Tối ưu kích thước bundle
-- Thêm ảo hóa cho danh sách dài
-- Cải thiện lazy loading và code splitting
-
-### 5. Mở rộng tính năng
-
-- Cải thiện trợ lý AI
-- Tích hợp sâu hơn với hệ thống backend
-- Thêm biểu đồ và báo cáo trực quan
-
-## Hướng dẫn phát triển
-
-### Quy ước import
-
-```typescript
-// Tốt - sử dụng exports từ index.ts
-import { TaskList, useTaskData } from '@/features/tasks';
-import { Button } from '@/shared/components/atoms';
-
-// Tránh - import trực tiếp từ file
-import TaskList from '@/features/tasks/components/TaskList';
-```
-
-### Quy ước đặt tên
-
-- **Component**: PascalCase (TaskList, StatusBadge)
-- **Hook**: camelCase bắt đầu bằng use (useTaskData)
-- **Util**: camelCase (formatDate, normalizeTask)
-- **Type**: PascalCase (Task, User, Resource)
-- **File**: kebab-case (task-list.tsx, use-data-fetch.ts)
-
-### Cấu trúc Component
-
-- Mỗi component nên có một trách nhiệm duy nhất
-- Component nên được phân loại theo cấu trúc Atomic Design
-- Container và presentational components nên được tách biệt
-
-### Testing
-
-- Mỗi component quan trọng cần có unit test
-- Các utility cần được test kỹ lưỡng
-- E2E test nên bao quát các luồng chính của người dùng
-
-## Công nghệ sử dụng
-
-- **Framework**: Next.js 15.x
-- **Ngôn ngữ**: TypeScript
-- **Styling**: Tailwind CSS
-- **State Management**: Zustand, React Query
-- **UI Components**: Shadcn UI, Radix UI
-- **Biểu đồ**: Recharts
-- **Virtualization**: react-window
-- **API Client**: Axios
-- **Testing**: Jest, React Testing Library
-
-## Hướng dẫn cài đặt và chạy dự án
-
-### Yêu cầu hệ thống
-- Node.js 18.x trở lên
-- npm/yarn/pnpm
-
-### Cài đặt
 ```bash
-# Clone dự án
-git clone <repository-url>
+git clone https://github.com/your-org/one-cmb.git
+cd one-cmb
+```
 
-# Cài đặt dependencies
+2. **Cài đặt dependencies**
+
+```bash
 npm install
-
-# Tạo các biến môi trường
-cp .env.example .env.local
+# hoặc
+yarn install
 ```
 
-### Chạy môi trường phát triển
+3. **Chạy môi trường development**
+
 ```bash
-# Khởi động với webpack
 npm run dev
-
-# Khởi động với turbopack (nhanh hơn)
-npm run dev:turbo
-
-# Chạy test
-npm run test
+# hoặc
+yarn dev
 ```
 
-### Build và triển khai
+Ứng dụng sẽ chạy tại `http://localhost:9002`
+
+Để chạy với Turbopack:
+
 ```bash
-# Build cho production
-npm run build
-
-# Chạy ứng dụng đã build
-npm run start
+npm run dev:turbo
+# hoặc
+yarn dev:turbo
 ```
 
-## Kết luận
+4. **Build cho production**
 
-ONE CMB là một dự án hiện đại áp dụng các thực hành tốt nhất trong phát triển frontend. Với kiến trúc dựa trên tính năng, thiết kế component nguyên tử và chiến lược quản lý state hiệu quả, dự án hướng đến việc tạo ra một ứng dụng dễ bảo trì, dễ mở rộng và hiệu suất cao cho quản lý doanh nghiệp.
+```bash
+npm run build
+# hoặc
+yarn build
+```
+
+5. **Khởi chạy bản production**
+
+```bash
+npm run start
+# hoặc
+yarn start
+```
+
+## 🧪 Kiểm thử
+
+Chạy unit tests:
+
+```bash
+npm run test
+# hoặc
+yarn test
+```
+
+Chạy tests trong chế độ watch:
+
+```bash
+npm run test:watch
+# hoặc
+yarn test:watch
+```
+
+## 📚 Mô tả chức năng chính
+
+### 1. Bảng điều khiển tổng quan
+
+Hiển thị thông tin chi tiết về nhân viên và các công việc quan trọng nhất. Cung cấp cái nhìn tổng quan về tình trạng công việc và dự án hiện tại.
+
+### 2. Quản lý công việc
+
+- Theo dõi danh sách công việc
+- Phân loại theo trạng thái: Đang thực hiện, Hoàn thành, Quá hạn
+- Hiển thị tiến độ công việc
+- Phân công công việc cho nhân viên
+- Cập nhật trạng thái công việc
+
+### 3. Quản lý tài nguyên
+
+- Quản lý thiết bị được cấp
+- Quản lý phần mềm và giấy phép
+- Quản lý dữ liệu và tài liệu
+- Yêu cầu tài nguyên mới
+
+### 4. Theo dõi hoạt động
+
+- Quản lý hoạt động đến: cuộc họp, đào tạo, yêu cầu, thông báo
+- Quản lý hoạt động đi: đơn xin nghỉ phép, đề xuất, báo cáo
+- Theo dõi trạng thái của từng hoạt động
+
+### 5. Trợ lý AI
+
+- Trả lời câu hỏi của người dùng
+- Đề xuất hành động dựa trên ngữ cảnh
+- Cung cấp trợ giúp theo ngữ cảnh
+- Tương tác thông qua giao diện chat
+
+## 🔄 Quy trình làm việc
+
+1. **Đăng nhập vào hệ thống**
+2. **Xem bảng điều khiển tổng quan** để nắm bắt thông tin
+3. **Quản lý công việc** của bản thân và/hoặc nhóm
+4. **Theo dõi và phản hồi các hoạt động** đến và đi
+5. **Quản lý tài nguyên** được cấp
+6. **Sử dụng trợ lý AI** để hỗ trợ khi cần
+
+## 🛠️ Công cụ phát triển
+
+- ESLint: Kiểm tra và chuẩn hóa code
+- Prettier: Format code
+- TypeScript: Kiểm tra type
+- Jest: Testing framework
+
+## 🧩 Mô đun và Hooks chính
+
+- `useAIAssistant`: Hook quản lý trạng thái và tương tác với trợ lý AI
+- `useEmployee`: Hook quản lý thông tin nhân viên
+- `useTaskData`: Hook quản lý dữ liệu công việc
+- `useErrorHandler`: Hook xử lý lỗi
+- `useDataFetch`: Hook tổng quát để fetch dữ liệu
+
+## 👥 Vai trò người dùng
+
+Hệ thống hỗ trợ các vai trò sau:
+
+- **Nhân viên**: Xem và cập nhật công việc của họ
+- **Quản lý**: Quản lý nhân viên và phân công công việc
+- **Admin**: Quản lý toàn bộ hệ thống
+
+## 🔒 Bảo mật
+
+- Xác thực người dùng thông qua Firebase
+- Phân quyền dựa trên vai trò
+- Bảo vệ API routes
+- Middleware bảo mật
+
+## 🌐 Môi trường triển khai
+
+Hệ thống có thể được triển khai trên các nền tảng sau:
+
+- Vercel
+- Netlify
+- AWS
+- Google Cloud Platform
+- Azure
+
+## 📈 Kế hoạch phát triển
+
+- [ ] Thêm nhiều biểu đồ báo cáo
+- [ ] Tích hợp hệ thống thông báo realtime
+- [ ] Mobile app cho iOS và Android
+- [ ] Tính năng quản lý dự án nâng cao
+- [ ] Tích hợp với các dịch vụ bên thứ ba (Slack, Microsoft Teams, v.v.)
