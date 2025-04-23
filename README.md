@@ -1,9 +1,5 @@
 # ONE CMB - Hệ thống Quản lý Nhân viên và Công việc
 
-<div align="center">
-  <img src="path/to/logo.png" alt="ONE CMB Logo" width="200" height="auto">
-  <h3>Nền tảng quản lý nhân sự và công việc dành cho doanh nghiệp hiện đại</h3>
-</div>
 
 ## 📖 Tổng quan
 
