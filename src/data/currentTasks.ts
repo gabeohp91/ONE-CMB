@@ -1,0 +1,32 @@
+export const currentTasks = [
+  {
+    id: 1,
+    name: 'Công việc 1',
+    dueDate: '20/03/2025',
+    status: 'Đang thực hiện',
+    statusColor: 'bg-blue-500',
+    priority: 'Cao',
+    progress: 65,
+    project: 'Dự án A',
+  },
+  {
+    id: 2,
+    name: 'Công việc 2',
+    dueDate: '18/03/2025',
+    status: 'Đang thực hiện',
+    statusColor: 'bg-blue-500',
+    priority: 'Trung bình',
+    progress: 30,
+    project: 'Dự án B',
+  },
+  {
+    id: 3,
+    name: 'Công việc 3',
+    dueDate: '25/03/2025',
+    status: 'Chưa bắt đầu',
+    statusColor: 'bg-gray-500',
+    priority: 'Thấp',
+    progress: 0,
+    project: 'Dự án C',
+  },
+];
