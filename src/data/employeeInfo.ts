@@ -1,0 +1,85 @@
+// src/data/employeeData.ts
+
+export const employeeInfo = {
+    name: 'Nguyễn Thị Minh',
+    position: 'Kỹ sư Thiết kế',
+    department: 'Phòng Thiết kế',
+    avatar: 'NTM',
+    email: 'nguyenthiminh@cmb.com.vn',
+    phone: '0912345678',
+    manager: 'Lê Minh Hiếu',
+    joinDate: '01/06/2023',
+    incoming: [
+      {
+        type: "meeting",
+        title: "Cuộc họp 1",
+        details: "16/03/2025 09:00 - 10:30, Phòng họp A",
+        status: "Sắp diễn ra",
+      },
+      {
+        type: "training",
+        title: "Đào tạo 1",
+        details: "18/03/2025 14:00-17:00, Phòng đào tạo",
+        status: "Sắp diễn ra",
+        content: "Nội dung: Nội dung 1",
+      },
+      {
+        type: "project",
+        title: "Dự án 1",
+        details: "15/03/2025, 08:30",
+        status: "Đang xử lý",
+        content: "Yêu cầu: Yêu cầu 1",
+      },
+      {
+        type: "user",
+        title: "Người 1",
+        details: "14/03/2025, 15:45",
+        status: "Đã xem",
+        content: "Tài liệu: Tài liệu 1",
+      },
+      {
+        type: "task",
+        title: "Công việc 1",
+        details: "13/03/2025, 10:30",
+        status: "Đang thực hiện",
+        content: "Người giao: Người 1 | Thời hạn: 20/03/2025",
+      },
+    ],
+    outgoing: [
+      {
+        type: "leave",
+        title: "Đơn xin nghỉ phép",
+        details: "Đến: Phòng Nhân sự | 14/03/2025",
+        status: "Đã duyệt",
+        content: "Thời gian nghỉ: 25/03/2025 - 26/03/2025 (2 ngày)",
+      },
+      {
+        type: "request",
+        title: "Đề xuất mua thiết bị",
+        details: "Đến: Phòng Hành chính | 10/03/2025",
+        status: "Đang xử lý",
+        content: "Nội dung: Đề xuất mua màn hình phụ để làm việc hiệu quả hơn với phần mềm thiết kế",
+      },
+      {
+        type: "report",
+        title: "Báo cáo tiến độ dự án Cảng XYZ",
+        details: "Đến: Lê Minh Hiếu | 05/03/2025",
+        status: "Đã duyệt",
+        content: "Tiến độ dự án: Hoàn thành 65%, đúng kế hoạch",
+      },
+      {
+        type: "request",
+        title: "Yêu cầu cấp phát văn phòng phẩm",
+        details: "Đến: Phòng Vật tư | 01/03/2025",
+        status: "Đã duyệt",
+        content: "Yêu cầu: 2 hộp bút bi, 1 cuốn sổ ghi chép, 5 xấp giấy A4",
+      },
+      {
+        type: "overtime",
+        title: "Đề nghị tăng ca",
+        details: "Đến: Phòng Nhân sự | 28/02/2025",
+        status: "Từ chối",
+        content: "Lý do từ chối: Không đạt điều kiện tăng ca theo quy định công ty",
+      },
+    ],
+  }
