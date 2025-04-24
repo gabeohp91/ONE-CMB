@@ -52,9 +52,17 @@ interface MessageContext {
   [key: string]: any;
 }
 
+export async function GET(request: NextRequest) {
+  return NextResponse.json({
+    status: 'available',
+    services: ['chat', 'generate', 'translate', 'suggestions', 'contextualHelp', 'templateGeneration'],
+    version: '1.0.0'
+  });
+}
+
 export async function POST(request: NextRequest) {
   try {
-    const { action, messages, prompt, context, targetLanguage } = await request.json();
+    const { action, messages, prompt, context, targetLanguage, templateId, formData } = await request.json();
     
     let result = '';
     
@@ -78,6 +86,21 @@ export async function POST(request: NextRequest) {
         const translatePrompt = `Translate the following text to ${targetLanguage}: ${prompt}`;
         const translateResult = await model.generateText(translatePrompt);
         result = translateResult.text();
+        break;
+        
+      case 'templateGeneration':
+        // Handle template generation
+        if (!templateId) {
+          return NextResponse.json({ error: 'Template ID is required' }, { status: 400 });
+        }
+        
+        // Create a prompt based on the template and form data
+        const templatePrompt = `Generate a ${formData?.templateType || 'document'} based on the following information:
+Template ID: ${templateId}
+${Object.entries(formData || {}).map(([key, value]) => `${key}: ${value}`).join('\n')}`;
+        
+        const templateResult = await model.generateText(templatePrompt);
+        result = templateResult.text();
         break;
         
       case 'suggestions':

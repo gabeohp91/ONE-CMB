@@ -14,12 +14,14 @@ interface AIAssistantProps {
   };
   onClose: () => void;
   className?: string;
+  contextData?: any; // Add contextData prop
 }
 
 const AIAssistant: React.FC<AIAssistantProps> = ({ 
   employeeInfo, 
   onClose,
   className = '',
+  contextData = {},
 }) => {
   const [activeTab, setActiveTab] = useState<'chat' | 'help' | 'suggestions'>('chat');
   const { error, handleError } = useErrorHandler();
@@ -30,16 +32,36 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
     return {
       user: employeeInfo,
       currentPage: 'dashboard',
-      recentTasks: [] // This would come from a task store in a real implementation
+      recentTasks: contextData.tasks || [],
+      taskHistory: contextData.taskHistory || [],
+      activeTab: contextData.activeTab || 'overview',
+      // Add any other context data that might be useful
+      stats: contextData.stats || {},
+      viewMode: contextData.viewMode || 'default'
     };
   };
   
-  // Initialize with welcome message
+  // Initialize with welcome message tailored based on available data
+  const getWelcomeMessage = () => {
+    const taskCount = contextData.tasks?.length || 0;
+    const completedTasks = contextData.taskHistory?.length || 0;
+    
+    return `Chào ${employeeInfo.name}! Tôi là Trợ lý AI. ${
+      taskCount > 0 
+        ? `Bạn có ${taskCount} công việc ${taskCount > 1 ? 'đang chờ xử lý' : 'cần hoàn thành'}`
+        : 'Chào mừng bạn đến với ứng dụng quản lý công việc'
+    }${
+      completedTasks > 0
+        ? ` và bạn đã hoàn thành ${completedTasks} công việc gần đây.`
+        : '.'
+    } Bạn cần hỗ trợ gì không?`;
+  };
+  
   const initialMessages: Message[] = [
     {
       id: '1',
       sender: 'ai',
-      content: `Chào ${employeeInfo.name}! Tôi là Trợ lý AI. Bạn có 2 công việc sắp đến hạn và cuộc họp dự án vào ngày mai. Bạn cần hỗ trợ gì không?`,
+      content: getWelcomeMessage(),
       timestamp: new Date(),
     },
   ];
@@ -60,6 +82,9 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
     onError: handleError,
   });
 
+  // Reference to the wrapper element for custom events
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  
   useEffect(() => {
     scrollToBottom();
     
@@ -68,6 +93,32 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
       loadContextualHelp();
     }
   }, [messages, activeTab]);
+  
+  // Set up event listeners for AI analysis requests
+  useEffect(() => {
+    const wrapper = wrapperRef.current;
+    
+    if (wrapper) {
+      const handleAnalyzeData = (event: CustomEvent) => {
+        const { type, data } = event.detail;
+        
+        // Create a user message that describes what's being analyzed
+        const userMessage = `Please analyze my ${type} data and provide insights.`;
+        sendMessage(userMessage);
+        
+        // In a real implementation, we would directly call analyzeData here
+        // For now, we're simulating it through the normal AI flow
+      };
+      
+      // Add the event listener with type assertion
+      wrapper.addEventListener('analyze-data', handleAnalyzeData as EventListener);
+      
+      // Clean up
+      return () => {
+        wrapper.removeEventListener('analyze-data', handleAnalyzeData as EventListener);
+      };
+    }
+  }, [sendMessage]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -84,7 +135,10 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
   };
   
   return ( 
-    <div className={`h-full bg-white shadow-xl overflow-hidden flex flex-col border-l border-gray-200 max-h-screen ${className}`}>
+    <div 
+      ref={wrapperRef}
+      className={`h-full bg-white shadow-xl overflow-hidden flex flex-col border-l border-gray-200 max-h-screen ai-assistant-wrapper ${className}`}
+    >
       <div className="bg-blue-600 text-white px-4 py-3 flex justify-between items-center"> 
         <div className="flex items-center"> 
           <div className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm font-medium mr-2">AI</div> 
