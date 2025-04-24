@@ -1,1 +1,0 @@
-export { default as useDataFetch } from './use-data-fetch';
